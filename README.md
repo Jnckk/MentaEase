@@ -13,10 +13,10 @@ https://mentaease-api.vercel.app
 ## Contents
 
 1. [GroqAPI](?tab=readme-ov-file#1-groqapi)
-2. [User Registration](https://github.com/Menta-Ease/Backend?tab=readme-ov-file#2-user-registration-api)
-3. [Login](https://github.com/Menta-Ease/Backend?tab=readme-ov-file#3-user-login-api)
-4. [Update](https://github.com/Menta-Ease/Backend?tab=readme-ov-file#4-update-profile-api)
-5. [Delete](https://github.com/Menta-Ease/Backend?tab=readme-ov-file#5-delete-account-api)
+2. [User Registration](?tab=readme-ov-file#2-user-registration-api)
+3. [Login](?tab=readme-ov-file#3-user-login-api)
+4. [Update](?tab=readme-ov-file#4-update-profile-api)
+5. [Delete](?tab=readme-ov-file#5-delete-account-api)
 
 ## 1. GroqAPI
 
