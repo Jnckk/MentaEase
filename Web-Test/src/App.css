@@ -1,0 +1,19 @@
+/* src/index.css atau src/App.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+}
+
+.chat-box {
+  height: calc(100% - 100px); /* Sesuaikan dengan tinggi header dan input */
+  overflow-y: auto;
+}
