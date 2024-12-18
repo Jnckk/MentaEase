@@ -1,6 +1,6 @@
 # MentaEase API Documentation
 
-This documentation provides a detailed guide to use the MentaEase API. The API consists of three main sections: **GroqAPI**, **User Registration**, and **Login**. This guide explains how to test the endpoints using **Postman** and integrate them into your applications, either web or mobile.
+This documentation provides a detailed guide to use the MentaEase API. The API consists of three main sections: **GroqAPI**, **User Registration**, and **Login**. This guide explains how to test the endpoints using **Postman** and integrate them into your applications.
 
 ## Base URL
 
