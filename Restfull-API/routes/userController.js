@@ -1,7 +1,7 @@
 // userController.js
 const express = require("express");
 const bcrypt = require("bcrypt");
-const pool = require("../connections/supabaseClient");
+const pool = require("../utils/supabaseClient");
 
 const router = express.Router();
 

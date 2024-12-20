@@ -2,7 +2,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const pool = require("../connections/supabaseClient");
+const pool = require("../utils/supabaseClient");
 
 const router = express.Router();
 
@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
         userId: user.id,
         email: user.email,
       },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET
       // { expiresIn: "1h" }
     );
 
