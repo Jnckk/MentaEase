@@ -1,7 +1,7 @@
+
 # MentaEase API Documentation
 
-This documentation provides a detailed guide to use the MentaEase API. The API consists of three main sections: **GroqAPI**, **User Registration**, and **Login**. This guide explains how to test the endpoints using **Postman** and integrate them into your applications.
-
+This documentation provides a detailed guide to use the MentaEase API. This guide explains how to test the endpoints using **Postman** and integrate them into your applications, either web or mobile.
 ## Base URL
 
 The base URL for the API is:
@@ -9,7 +9,6 @@ The base URL for the API is:
 ```
 https://mentaease-api.vercel.app
 ```
-
 ## Contents
 
 1. [GroqAPI](?tab=readme-ov-file#1-groqapi)
@@ -17,7 +16,6 @@ https://mentaease-api.vercel.app
 3. [Login](?tab=readme-ov-file#3-user-login-api)
 4. [Update](?tab=readme-ov-file#4-update-profile-api)
 5. [Delete](?tab=readme-ov-file#5-delete-account-api)
-
 ## 1. GroqAPI
 
 **Endpoint:** `/groq`
@@ -57,32 +55,29 @@ POST /groq
 
 - `400 Bad Request`: Prompt, sessionId, and language are required.
 - `500 Internal Server Error`: Error connecting to Groq API.
-
 ## 2. User Registration API
 
-**Endpoint:** `/api/register`
+**Endpoint:** `/api/registration`
 
 ### Description
 
-This endpoint allows users to register by providing an email, phone number, and password. The system ensures that the email and phone number are unique.
+This endpoint allows users to register by providing an email and password. The system ensures that the email is unique.
 
 ### Endpoint Details
 
-- **URL**: `/api/register`
+- **URL**: `/api/registration`
 - **Method**: `POST`
 - **Headers**: `Content-Type: application/json`
 - **Body** (JSON):
   - `email` (string): The user's email address.
-  - `phone_number` (string): The user's phone number.
   - `password` (string): The user's password.
 
 ### Example Request
 
 ```json
-POST /api/register
+POST /api/registration
 {
   "email": "user@example.com",
-  "phone_number": "08123456789",
   "password": "securepassword"
 }
 ```
@@ -91,42 +86,35 @@ POST /api/register
 
 ```json
 {
-  "message": "User registered successfully",
+  "message": "Registrasi berhasil",
   "user": {
-    "id": 1,
-    "email": "user@example.com",
-    "phone_number": "08123456789"
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "email": "user@example.com"
   }
 }
 ```
 
 ### Error Responses
 
-- `400 Bad Request`: Missing required fields (`email`, `phone_number`, or `password`).
+- `400 Bad Request`: Missing required fields (`email` or `password`).
   - Example:
     ```json
     {
-      "message": "Email, phone number, and password are required"
+      "error": "Email dan password wajib diisi"
     }
     ```
-- `400 Bad Request`: Email or phone number is already registered.
+- `400 Bad Request`: Email is already registered.
   - Example:
     ```json
     {
-      "message": "Email is already registered"
-    }
-    ```
-    ```json
-    {
-      "message": "Phone number is already registered"
+      "error": "Email already registered"
     }
     ```
 - `500 Internal Server Error`: Error occurred during registration.
   - Example:
     ```json
     {
-      "message": "Error registering user",
-      "error": "Detailed error message here"
+      "error": "Terjadi kesalahan server"
     }
     ```
 
@@ -136,7 +124,7 @@ POST /api/register
 
 ### Description
 
-This endpoint allows users to log in by providing their email and password. If the credentials are valid, a JSON Web Token (JWT) is generated for authentication.
+This endpoint allows users to log in by providing an email and password. If the credentials are valid, the user is authenticated, and a profile along with an access token is returned.
 
 ### Endpoint Details
 
@@ -161,12 +149,17 @@ POST /api/login
 
 ```json
 {
-  "message": "Login successful",
+  "message": "Login berhasil",
   "user": {
-    "id": 1,
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "email": "user@example.com"
+  },
+  "profile": {
     "email": "user@example.com",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTY4MDAwMDAwMH0.Wk_v6WR6UPhZo5hxqWzKdrShImPXnQH7kj1-NkDbEQ4"
-  }
+    "display_name": "User Name",
+    "phone": "08123456789"
+  },
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjNlNDU2Ny1lODliLTEyZDMtYTQ1Ni00MjY2MTQxNzQwMDAiLCJpYXQiOjE2ODAwMDAwMDB9.Wk_v6WR6UPhZo5hxqWzKdrShImPXnQH7kj1-NkDbEQ4"
 }
 ```
 
@@ -176,172 +169,165 @@ POST /api/login
   - Example:
     ```json
     {
-      "message": "Email and password are required"
+      "error": "Email dan password wajib diisi"
     }
     ```
-- `400 Bad Request`: Invalid email or password.
+- `400 Bad Request`: Invalid credentials or profile retrieval error.
   - Example:
     ```json
     {
-      "message": "Invalid email or password"
+      "error": "Invalid email or password"
+    }
+    ```
+    ```json
+    {
+      "error": "Error fetching user profile"
     }
     ```
 - `500 Internal Server Error`: Error occurred during login.
   - Example:
     ```json
     {
-      "message": "Error during login",
-      "error": "Detailed error message here"
+      "error": "Terjadi kesalahan server"
     }
     ```
 
 ## 4. Update Profile API
 
-**Endpoint:** `/api/profile`
+**Endpoint:** `/api/Edit-Account`
 
 ### Description
 
-This endpoint allows users to update their profile information, such as email, phone number, or password. The user must provide a valid token for authentication.
+This endpoint allows users to update their account information, such as email, password, phone, or display name. Changes must be performed one at a time.
 
 ### Endpoint Details
 
-- **URL**: `/api/profile`
-- **Method**: `PUT`
+- **URL**: `/api/Edit-Account`
+- **Method**: `POST`
 - **Headers**:
   - `Content-Type: application/json`
   - `Authorization`: `Bearer <token>`
 - **Body** (JSON):
-  - `email` (string, optional): The new email address.
-  - `phone_number` (string, optional): The new phone number.
-  - `password` (string, optional): The new password.
+  - `email` (string, optional): The new email address (cannot be updated with password simultaneously).
+  - `oldPassword` (string, optional): The current password (required when updating password).
+  - `newPassword` (string, optional): The new password.
+  - `phone` (string, optional): The new phone number.
+  - `displayName` (string, optional): The new display name.
 
 ### Example Request
 
+#### Update Email
+
 ```json
-PUT /api/profile
+POST /api/Edit-Account
 {
-  "email": "newuser@example.com",
-  "phone_number": "08129876543",
-  "password": "newsecurepassword"
+  "email": "newuser@example.com"
 }
 ```
 
-### Example Response
+#### Update Password
 
 ```json
+POST /api/Edit-Account
 {
-  "message": "Profile updated successfully"
+  "oldPassword": "currentpassword",
+  "newPassword": "newsecurepassword"
 }
 ```
+
+#### Update Phone
+
+```json
+POST /api/Edit-Account
+{
+  "phone": "08129876543"
+}
+```
+
+#### Update Display Name
+
+```json
+POST /api/Edit-Account
+{
+  "displayName": "New User Name"
+}
+```
+
+### Example Responses
+
+#### Success (200 OK)
+
+- Email Update:
+  ```json
+  {
+    "message": "Email berhasil diperbarui. Periksa email baru Anda untuk tautan konfirmasi."
+  }
+  ```
+- Password Update:
+  ```json
+  {
+    "message": "Password berhasil diperbarui."
+  }
+  ```
+- Phone Update:
+  ```json
+  {
+    "message": "Phone berhasil diperbarui di profil."
+  }
+  ```
+- Display Name Update:
+  ```json
+  {
+    "message": "Display name berhasil diperbarui di profil."
+  }
+  ```
 
 ### Error Responses
 
-- `400 Bad Request`: No fields provided for update.
+- `400 Bad Request`: No valid fields provided for update.
   - Example:
     ```json
     {
-      "message": "At least one field is required to update"
+      "error": "Harus ada perubahan pada email, password, phone, atau display_name"
     }
     ```
-- `401 Unauthorized`: Invalid or missing token.
+- `400 Bad Request`: Email and password cannot be updated simultaneously.
   - Example:
     ```json
     {
-      "message": "Access denied, no token provided"
+      "error": "Email dan password tidak dapat diperbarui secara bersamaan. Harap lakukan satu per satu."
     }
     ```
-    ```json
-    {
-      "message": "Invalid token"
-    }
-    ```
-- `404 Not Found`: User not found.
+- `400 Bad Request`: Incorrect old password.
   - Example:
     ```json
     {
-      "message": "User not found"
+      "error": "Password lama salah."
     }
     ```
-- `400 Bad Request`: Email is already taken.
+- `400 Bad Request`: User profile not found.
   - Example:
     ```json
     {
-      "message": "Email is already taken"
+      "error": "Profil pengguna tidak ditemukan."
     }
     ```
-- `500 Internal Server Error`: Error occurred during profile update.
+- `500 Internal Server Error`: Error occurred during account update.
   - Example:
     ```json
     {
-      "message": "Error updating profile",
-      "error": "Detailed error message here"
+      "error": "Terjadi kesalahan server"
     }
     ```
+
+### Note
+- Each change (email, password, phone, or display name) must be performed individually. Testing multiple changes simultaneously is not supported.
 
 ## 5. Delete Account API
 
 **Endpoint:** `/api/delete-account`
 
-### Description
-
-This endpoint allows users to delete their account permanently. The user must provide a valid token for authentication.
-
-### Endpoint Details
-
-- **URL**: `/api/delete-account`
-- **Method**: `DELETE`
-- **Headers**:
-  - `Authorization`: `Bearer <token>`
-
-### Example Request
-
-```json
-DELETE /api/delete-account
-Headers: {
-  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTY4MDAwMDAwMH0.Wk_v6WR6UPhZo5hxqWzKdrShImPXnQH7kj1-NkDbEQ4"
-}
-```
-
-### Example Response
-
-```json
-{
-  "message": "Account deleted successfully"
-}
-```
-
-### Error Responses
-
-- `403 Forbidden`: Token is missing.
-  - Example:
-    ```json
-    {
-      "message": "Token is required"
-    }
-    ```
-- `401 Unauthorized`: Invalid or expired token.
-  - Example:
-    ```json
-    {
-      "message": "Invalid or expired token"
-    }
-    ```
-- `404 Not Found`: User not found.
-  - Example:
-    ```json
-    {
-      "message": "User not found"
-    }
-    ```
-- `500 Internal Server Error`: Error occurred during account deletion.
-  - Example:
-    ```json
-    {
-      "message": "Error deleting account",
-      "error": "Detailed error message here"
-    }
-    ```
-
+### COMING SOON GUYS
 # Example Code for Interacting with All API Endpoints
 
 ## 1. GroqAPI
@@ -371,15 +357,14 @@ fetchGroqAPI();
 
 ```javascript
 async function registerUser() {
-  const response = await fetch('/api/register', {
-    method: 'POST',
+  const response = await fetch("/api/register", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: 'user@example.com',
-      phone_number: '08123456789',
-      password: 'securepassword',
+      email: "user@example.com",
+      password: "securepassword",
     }),
   });
 
@@ -394,14 +379,14 @@ registerUser();
 
 ```javascript
 async function loginUser() {
-  const response = await fetch('/api/login', {
-    method: 'POST',
+  const response = await fetch("/api/login", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      email: 'user@example.com',
-      password: 'securepassword',
+      email: "user@example.com",
+      password: "securepassword",
     }),
   });
 
@@ -414,18 +399,18 @@ loginUser();
 
 ## 4. Update Profile API
 
+#### Update Email
+
 ```javascript
-async function updateProfile(token) {
-  const response = await fetch('/api/profile', {
-    method: 'PUT',
+async function updateEmail(token) {
+  const response = await fetch("/api/Edit-Account", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      email: 'newuser@example.com',
-      phone_number: '08129876543',
-      password: 'newsecurepassword',
+      email: "newuser@example.com",
     }),
   });
 
@@ -433,24 +418,77 @@ async function updateProfile(token) {
   console.log(data);
 }
 
-const token = 'your-jwt-token-here';
-updateProfile(token);
+updateEmail("your-token-here");
 ```
 
-## 5. Delete Account API
+#### Update Password
 
 ```javascript
-async function deleteAccount(token) {
-  const response = await fetch('/api/delete-account', {
-    method: 'DELETE',
+async function updatePassword(token) {
+  const response = await fetch("/api/Edit-Account", {
+    method: "POST",
     headers: {
-      'Authorization': `Bearer ${token}`,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify({
+      oldPassword: "currentpassword",
+      newPassword: "newsecurepassword",
+    }),
   });
 
   const data = await response.json();
   console.log(data);
 }
 
-deleteAccount(token);
+updatePassword("your-token-here");
 ```
+
+#### Update Phone
+
+```javascript
+async function updatePhone(token) {
+  const response = await fetch("/api/Edit-Account", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      phone: "08129876543",
+    }),
+  });
+
+  const data = await response.json();
+  console.log(data);
+}
+
+updatePhone("your-token-here");
+```
+
+#### Update Display Name
+
+```javascript
+async function updateDisplayName(token) {
+  const response = await fetch("/api/Edit-Account", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      displayName: "New User Name",
+    }),
+  });
+
+  const data = await response.json();
+  console.log(data);
+}
+
+updateDisplayName("your-token-here");
+```
+
+
+## 5. Delete Account API
+
+### COMING SOON GUYS

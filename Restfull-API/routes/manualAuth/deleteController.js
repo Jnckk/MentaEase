@@ -1,7 +1,7 @@
 // deleteController.js
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const pool = require("../utils/supabaseClient");
+const pool = require("../../utils/supabaseClient");
 
 const router = express.Router();
 

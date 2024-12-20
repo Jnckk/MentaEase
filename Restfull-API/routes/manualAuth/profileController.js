@@ -2,7 +2,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const pool = require("../utils/supabaseClient");
+const pool = require("../../utils/supabaseClient");
 
 const router = express.Router();
 
@@ -25,7 +25,7 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-router.put("/profile", verifyToken, async (req, res) => {
+router.put("/profilee", verifyToken, async (req, res) => {
   const { email, phone_number, password } = req.body;
   const userId = req.user.userId;
 

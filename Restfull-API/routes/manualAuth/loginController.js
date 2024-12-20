@@ -2,11 +2,11 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const pool = require("../utils/supabaseClient");
+const pool = require("../../utils/supabaseClient");
 
 const router = express.Router();
 
-router.post("/login", async (req, res) => {
+router.post("/loginn", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {

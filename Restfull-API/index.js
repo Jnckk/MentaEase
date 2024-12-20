@@ -3,10 +3,18 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const groqRoutes = require("./routes/GroqAPI");
-const userRoutes = require("./routes/userController");
-const loginController = require("./routes/loginController");
-const profileController = require("./routes/profileController");
-const deleteController = require("./routes/deleteController");
+const userRoutes = require("./routes/manualAuth/userController");
+const loginController = require("./routes/manualAuth/loginController");
+const profileController = require("./routes/manualAuth/profileController");
+const deleteController = require("./routes/manualAuth/deleteController");
+
+// Supabase
+const Registration = require("./routes/supabaseAuth/Registration");
+const Login = require("./routes/supabaseAuth/Login");
+const Profile = require("./routes/supabaseAuth/Profile");
+const Edit = require("./routes/supabaseAuth/Edit-Account");
+const Delete = require("./routes/supabaseAuth/Delete-Account");
+
 const { inject } = require("@vercel/analytics");
 
 inject();
@@ -39,6 +47,13 @@ app.use("/api", userRoutes);
 app.use("/api", loginController);
 app.use("/api", profileController);
 app.use("/api", deleteController);
+
+// Supabase
+app.use("/api", Registration);
+app.use("/api", Login);
+app.use("/api", Profile);
+app.use("/api", Edit);
+app.use("/api", Delete);
 
 const PORT = process.env.PORT || 3002;
 
