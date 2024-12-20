@@ -11,12 +11,10 @@ router.post("/Edit-Account", verifyToken, async (req, res) => {
   console.log("Request body received:", req.body);
 
   if (!email && !oldPassword && !newPassword && !phone && !displayName) {
-    return res
-      .status(400)
-      .json({
-        error:
-          "Harus ada perubahan pada email, password, phone, atau display_name",
-      });
+    return res.status(400).json({
+      error:
+        "Harus ada perubahan pada email, password, phone, atau display_name",
+    });
   }
 
   try {
