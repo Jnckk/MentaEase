@@ -3,21 +3,19 @@ require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const groqRoutes = require("./routes/GroqAPI");
+
+// Manual Auth
 const userRoutes = require("./routes/manualAuth/userController");
 const loginController = require("./routes/manualAuth/loginController");
 const profileController = require("./routes/manualAuth/profileController");
 const deleteController = require("./routes/manualAuth/deleteController");
 
-// Supabase
+// Supabase Auth
 const Registration = require("./routes/supabaseAuth/Registration");
 const Login = require("./routes/supabaseAuth/Login");
 const Profile = require("./routes/supabaseAuth/Profile");
 const Edit = require("./routes/supabaseAuth/Edit-Account");
 const Delete = require("./routes/supabaseAuth/Delete-Account");
-
-const { inject } = require("@vercel/analytics");
-
-inject();
 
 const app = express();
 
