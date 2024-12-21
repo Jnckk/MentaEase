@@ -13,9 +13,10 @@ https://mentaease-api.vercel.app
 
 1. [GroqAPI](?tab=readme-ov-file#1-groqapi)
 2. [User Registration](?tab=readme-ov-file#2-user-registration-api)
-3. [Login](?tab=readme-ov-file#3-user-login-api)
-4. [Update](?tab=readme-ov-file#4-update-profile-api)
-5. [Delete](?tab=readme-ov-file#5-delete-account-api)
+3. [Login](?tab=readme-ov-file#4-user-login-api)
+4. [Profile](?tab=readme-ov-file#3-user-login-api)
+5. [Update](?tab=readme-ov-file#5-update-profile-api)
+6. [Delete](?tab=readme-ov-file#6-delete-account-api)
 ## 1. GroqAPI
 
 **Endpoint:** `/groq`
@@ -192,7 +193,67 @@ POST /api/login
     }
     ```
 
-## 4. Update Profile API
+## 4. Get Profile Data
+
+**Endpoint:** `/api/profile`
+
+### Description
+
+This endpoint allows authenticated users to fetch their profile data, including their email, display name, and phone number, after providing a valid authentication token.
+
+### Endpoint Details
+
+- **URL**: `/api/profile`
+- **Method**: `GET`
+- **Headers**: 
+  - `Authorization`: Bearer token (JWT token for authentication)
+- **Query Parameters**: None
+- **Body**: None
+
+### Example Request
+
+```http
+GET /api/profile
+```
+
+### Example Response
+
+```json
+{
+  "message": "Data profil berhasil diambil",
+  "profile": {
+    "email": "user@example.com",
+    "display_name": "User Name",
+    "phone": "08123456789"
+  }
+}
+
+```
+
+### Error Responses
+
+- `400 Bad Request`: Missing or invalid user ID.
+  - Example:
+    ```json
+    {
+    "error": "User ID tidak ditemukan"
+    }
+    ```
+- `400 Bad Request`: Error fetching profile data from the database.
+  - Example:
+    ```json
+    {
+    "error": "Error message from Supabase"
+    }
+    ```
+- `500 Internal Server Error`: An unexpected error occurred during the server operation.
+    ```json
+    {
+    "error": "Terjadi kesalahan server"
+    }
+    ```
+
+## 5. Update Profile API
 
 **Endpoint:** `/api/Edit-Account`
 
@@ -323,7 +384,7 @@ POST /api/Edit-Account
 ### Note
 - Each change (email, password, phone, or display name) must be performed individually. Testing multiple changes simultaneously is not supported.
 
-## 5. Delete Account API
+## 6. Delete Account API
 
 **Endpoint:** `/api/delete-account`
 
