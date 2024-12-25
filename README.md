@@ -17,6 +17,7 @@ https://mentaease-api.vercel.app
 4. [Profile](?tab=readme-ov-file#3-user-login-api)
 5. [Update](?tab=readme-ov-file#5-update-profile-api)
 6. [Delete](?tab=readme-ov-file#6-delete-account-api)
+7. [Logout API](?tab=readme-ov-file#6-delete-account-api)
 ## 1. GroqAPI
 
 **Endpoint:** `/groq`
@@ -451,6 +452,73 @@ DELETE /api/Delete-Account
 - The token must be provided in the `Authorization` header and formatted as `Bearer <token>`.
 - Account deletion is permanent and cannot be undone. Ensure users are fully informed before initiating this action.
 
+## 7. Logout API
+
+**Endpoint:** `/api/Logout`
+
+### Description
+This endpoint allows users to log out of the application by invalidating their authentication token. It requires a valid authentication token, which will be used to sign out the user from their current session in Supabase.
+
+### Endpoint Details
+
+- **URL**: `/api/Logout`
+- **Method**: `POST`
+- **Headers**:
+  - `Content-Type`: `application/json`
+  - `Authorization`: `Bearer <token>`
+
+### Example Request
+
+```json
+POST /api/logout
+```
+
+### Example Response
+
+#### Success (200 OK)
+
+```json
+{
+  "message": "Logout berhasil"
+}
+```
+
+### Error Responses
+
+- `400 Bad Request`: Error occurred while attempting to log out the user.
+  - Example:
+    ```json
+    {
+        "error": "Gagal logout pengguna"
+    }
+    ```
+- `403 Forbidden`: No token provided in the request.
+  - Example:
+    ```json
+    {
+      "error": "Token is required"
+    }
+    ```
+- `401 Unauthorized`: Invalid or expired token.
+  - Example:
+    ```json
+    {
+      "error": "Invalid or expired token"
+    }
+    ```
+- `500 Internal Server Error`: Server encountered an error while processing the request.
+  - Example:
+    ```json
+    {
+      "error": "Terjadi kesalahan server."
+    }
+    ```
+
+### Note
+
+- The token must be provided in the `Authorization` header and formatted as `Bearer <token>`.
+- Upon successful logout, the user session in Supabase will be invalidated, and the authentication token will no longer be valid.
+
 # Example Code for Interacting with All API Endpoints
 
 ## 1. GroqAPI
@@ -520,7 +588,26 @@ async function loginUser() {
 loginUser();
 ```
 
-## 4. Update Profile API
+## 4. Get Profile API
+
+```javascript
+async function getProfile(token) {
+  const response = await fetch("/api/profile", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+  console.log(data);
+}
+
+getProfile("your-token-here");
+```
+
+## 5. Update Profile API
 
 #### Update Email
 
@@ -612,7 +699,7 @@ updateDisplayName("your-token-here");
 ```
 
 
-## 5. Delete Account API
+## 6. Delete Account API
 
 #### Delete Account
 
@@ -631,4 +718,24 @@ async function deleteAccount(token) {
 }
 
 deleteAccount("your-token-here");
+```
+## 7. Logout Account API
+
+#### Logout Account
+
+```javascript
+async function logout(token) {
+  const response = await fetch("/api/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+  console.log(data);
+}
+
+logout("your-token-here");
 ```
