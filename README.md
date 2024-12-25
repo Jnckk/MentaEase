@@ -17,7 +17,7 @@ https://mentaease-api.vercel.app
 4. [Profile](?tab=readme-ov-file#3-user-login-api)
 5. [Update](?tab=readme-ov-file#5-update-profile-api)
 6. [Delete](?tab=readme-ov-file#6-delete-account-api)
-7. [Logout API](?tab=readme-ov-file#6-delete-account-api)
+7. [Logout API](?tab=readme-ov-file##7-logout-api)
 ## 1. GroqAPI
 
 **Endpoint:** `/groq`
