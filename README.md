@@ -13,8 +13,8 @@ https://mentaease-api.vercel.app
 
 1. [GroqAPI](?tab=readme-ov-file#1-groqapi)
 2. [User Registration](?tab=readme-ov-file#2-user-registration-api)
-3. [Login](?tab=readme-ov-file#3-user-login-api)
-4. [Profile](?tab=readme-ov-file#4-get-profile-data)
+3. [Login](?tab=readme-ov-file#4-user-login-api)
+4. [Profile](?tab=readme-ov-file#3-user-login-api)
 5. [Update](?tab=readme-ov-file#5-update-profile-api)
 6. [Delete](?tab=readme-ov-file#6-delete-account-api)
 ## 1. GroqAPI
@@ -386,9 +386,71 @@ POST /api/Edit-Account
 
 ## 6. Delete Account API
 
-**Endpoint:** `/api/delete-account`
+**Endpoint:** `/api/Delete-Account`
 
-### COMING SOON GUYS
+### Description
+This endpoint allows users to permanently delete their account from the system. It requires a valid authentication token and leverages the Supabase admin API for user deletion.
+
+### Endpoint Details
+
+- **URL**: `/api/Delete-Account`
+- **Method**: `DELETE`
+- **Headers**:
+  - `Content-Type`: `application/json`
+  - `Authorization`: `Bearer <token>`
+
+### Example Request
+
+```json
+DELETE /api/Delete-Account
+```
+
+### Example Response
+
+#### Success (200 OK)
+
+```json
+{
+  "message": "Akun berhasil dihapus."
+}
+```
+
+### Error Responses
+
+- `400 Bad Request`: Error occurred while attempting to delete the account.
+  - Example:
+    ```json
+    {
+      "error": "Gagal menghapus akun pengguna."
+    }
+    ```
+- `403 Forbidden`: No token provided in the request.
+  - Example:
+    ```json
+    {
+      "error": "Token is required"
+    }
+    ```
+- `401 Unauthorized`: Invalid or expired token.
+  - Example:
+    ```json
+    {
+      "error": "Invalid or expired token"
+    }
+    ```
+- `500 Internal Server Error`: Server encountered an error while processing the request.
+  - Example:
+    ```json
+    {
+      "error": "Terjadi kesalahan server."
+    }
+    ```
+
+### Note
+
+- The token must be provided in the `Authorization` header and formatted as `Bearer <token>`.
+- Account deletion is permanent and cannot be undone. Ensure users are fully informed before initiating this action.
+
 # Example Code for Interacting with All API Endpoints
 
 ## 1. GroqAPI
@@ -552,4 +614,21 @@ updateDisplayName("your-token-here");
 
 ## 5. Delete Account API
 
-### COMING SOON GUYS
+#### Delete Account
+
+```javascript
+async function deleteAccount(token) {
+  const response = await fetch("/api/Delete-Account", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+  console.log(data);
+}
+
+deleteAccount("your-token-here");
+```
