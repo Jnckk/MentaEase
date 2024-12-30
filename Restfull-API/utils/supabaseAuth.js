@@ -7,9 +7,13 @@ const Edit = require("../routes/supabaseAuth/Edit-Account");
 const Delete = require("../routes/supabaseAuth/Delete-Account");
 const Reset = require("../routes/supabaseAuth/Reset-Password");
 const Logout = require("../routes/supabaseAuth/LogOut");
+const { inject } = require("@vercel/analytics");
+const { injectSpeedInsights } = require("@vercel/speed-insights");
 
 const router = express.Router();
 
+inject();
+injectSpeedInsights();
 router.use("/", Registration);
 router.use("/", Login);
 router.use("/", Profile);

@@ -4,12 +4,15 @@ const express = require("express");
 const groqRoutes = require("./routes/GroqAPI");
 const supabaseAuth = require("./utils/supabaseAuth");
 const { corsOptions, setCustomHeaders } = require("./middlewares/corsConfig");
-
+const { inject } = require("@vercel/analytics");
+const { injectSpeedInsights } = require("@vercel/speed-insights");
 const app = express();
 
 app.use(express.json());
 app.use(setCustomHeaders);
 app.use(cors(corsOptions));
+inject();
+injectSpeedInsights();
 
 app.get("/", (req, res) => {
   res.send("This is backend");
