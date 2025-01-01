@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ChatBot from "./Pages/ChatBot";
 

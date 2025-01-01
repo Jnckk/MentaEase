@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const cors = require("cors"); // Import cors middleware
 const Groq = require("groq-sdk");
-const { v4: uuidv4 } = require("uuid");
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-const aiIdentity = `Nama Anda adalah AiThor, seorang psikolog profesional dan spesialis di bidang psikologi, lulusan Universitas Muhammadiyah Malang. Tugas Anda adalah memberikan penjelasan dan saran terkait psikologi dengan gaya bahasa yang santai dan mudah dipahami. Anda harus mampu menyesuaikan gaya bahasa dengan pengguna, sehingga terasa akrab namun tetap profesional. Fokuskan jawaban pada topik psikologi, termasuk masalah kesehatan mental, terapi, dan pengembangan diri. Jika menerima pertanyaan di luar topik psikologi, sampaikan bahwa Anda adalah psikolog dan tidak bisa menjawab selain tentang psikologi. Pastikan untuk menghindari istilah teknis yang rumit dan tetap menjaga relevansi jawaban dengan topik psikologi.`;
+const aiIdentity = {
+  id: `Halo! Nama saya AiThor, dan saya adalah seorang psikolog profesional lulusan Universitas Muhammadiyah Malang. Saya berfokus pada membantu orang-orang memahami dan mengatasi masalah kesehatan mental serta mengembangkan diri mereka menjadi lebih baik. Saya di sini untuk membantu menjawab pertanyaan-pertanyaan Anda tentang psikologi, terapi, dan pengembangan diri. Saya akan menjawab dengan gaya bahasa yang santai dan mudah dipahami, sehingga kita dapat berdiskusi dengan nyaman dan akrab. Jadi, apa pertanyaan Anda tentang psikologi?`,
+  en: `Hello! My name is AiThor, and I am a professional psychologist who graduated from Muhammadiyah University of Malang. I specialize in helping people understand and overcome mental health challenges while improving themselves to become better. I'm here to answer your questions about psychology, therapy, and personal development. I'll respond in a relaxed and easy-to-understand style, so we can have a comfortable and friendly discussion. What questions do you have about psychology?`,
+};
 
 const sessionHistories = {};
 
@@ -18,29 +19,32 @@ async function getGroqChatCompletion(sessionId, prompt, language) {
 
   const messages = sessionHistories[sessionId] || [];
 
-  // Jika sesi baru, tambahkan sistem pesan awal (identity dan aturan bahasa)
   if (messages.length === 0) {
     messages.push(
       {
         role: "system",
-        content: aiIdentity,
+        content: aiIdentity[language] || aiIdentity["en"],
       },
       {
         role: "system",
         content: systemMessage,
       }
     );
-    sessionHistories[sessionId] = messages; // Simpan sesi
+    sessionHistories[sessionId] = messages;
   } else {
-    // Pastikan aturan bahasa terbaru tetap digunakan di sesi ini
     const languageMessageIndex = messages.findIndex(
       (msg) =>
-        msg.role === "system" && msg.content.startsWith("You must answer")
+        msg.role === "system" &&
+        (msg.content.startsWith("Kamu harus menjawab") ||
+          msg.content.startsWith("You must answer"))
     );
 
-    if (languageMessageIndex !== -1) {
+    if (
+      languageMessageIndex !== -1 &&
+      messages[languageMessageIndex].content !== systemMessage
+    ) {
       messages[languageMessageIndex].content = systemMessage;
-    } else {
+    } else if (languageMessageIndex === -1) {
       messages.push({
         role: "system",
         content: systemMessage,
@@ -48,33 +52,28 @@ async function getGroqChatCompletion(sessionId, prompt, language) {
     }
   }
 
-  // Tambahkan prompt pengguna ke riwayat pesan
   messages.push({
     role: "user",
     content: prompt,
   });
 
-  // Kirim permintaan ke Groq API
   return groq.chat.completions.create({
     messages: messages,
     model: "llama3-70b-8192",
   });
 }
 
-// Tambahkan middleware CORS untuk route ini
-router.use(
-  cors({
-    origin: "*", // Atur sesuai kebutuhan Anda
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
-
 router.post("/", async (req, res) => {
   const { prompt, sessionId, language } = req.body;
 
-  if (!prompt || !sessionId || !language) {
-    return res.status(400).send("Prompt, sessionId, and language are required");
+  if (!sessionId || !language) {
+    return res
+      .status(400)
+      .json({ error: "SessionId and language are required" });
+  }
+
+  if (!prompt && !sessionHistories[sessionId]) {
+    return res.json({ response: aiIdentity[language] || aiIdentity["en"] });
   }
 
   if (!sessionHistories[sessionId]) {
@@ -84,7 +83,7 @@ router.post("/", async (req, res) => {
   try {
     const chatCompletion = await getGroqChatCompletion(
       sessionId,
-      prompt,
+      prompt || "",
       language
     );
     const responseContent = chatCompletion.choices[0]?.message?.content || "";
@@ -92,10 +91,10 @@ router.post("/", async (req, res) => {
       role: "assistant",
       content: responseContent,
     });
-    res.send(responseContent);
+    res.json({ response: responseContent });
   } catch (error) {
     console.error("Error connecting to Groq API:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

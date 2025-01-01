@@ -1,4 +1,4 @@
-// src/pages/ChatBot.js
+// Web-Test\src\Pages\ChatBot.js
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Form, InputGroup, Card } from "react-bootstrap";
 import axios from "axios";
@@ -11,7 +11,7 @@ const ChatBot = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [sessionId] = useState(uuidv4());
-  const [language] = useState("id");
+  const [language, setLanguage] = useState("id");
   const [isTyping, setIsTyping] = useState(false);
 
   const messagesEndRef = useRef(null);
@@ -39,7 +39,7 @@ const ChatBot = () => {
         }
       );
 
-      const botReply = response.data;
+      const botReply = response.data.response || "Maaf, terjadi kesalahan.";
       setMessages([...newMessages, { text: botReply, sender: "bot" }]);
     } catch (error) {
       setMessages([
@@ -66,10 +66,8 @@ const ChatBot = () => {
   return (
     <div className="d-flex" style={{ height: "100vh" }}>
       <AppSidebar />
-
       <div className="d-flex flex-column flex-grow-1">
-        <AppNavbar />
-
+        <AppNavbar language={language} setLanguage={setLanguage} />{" "}
         <Card
           className="flex-grow-1"
           style={{
@@ -103,7 +101,6 @@ const ChatBot = () => {
             </div>
           </Card.Body>
         </Card>
-
         <Card
           style={{
             border: "none",
