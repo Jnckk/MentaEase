@@ -5,7 +5,7 @@
 
 1. [User Registration](#1-user-registration-api)
 2. [Login](#2-user-login-api)
-3. [Profile](#3-user-login-api)
+3. [Profile](#3-get-profile-data)
 4. [Update](#4-update-profile-api)
 5. [Delete](#5-delete-account-api)
 6. [Logout API](#6-logout-api)
