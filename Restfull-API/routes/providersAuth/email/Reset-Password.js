@@ -1,5 +1,5 @@
 const express = require("express");
-const supabase = require("../../utils/supabase"); // Pastikan sudah mengonfigurasi supabase client Anda
+const supabase = require("../../../utils/supabase");
 
 const router = express.Router();
 
