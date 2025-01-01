@@ -1,4 +1,3 @@
-// Web-Test\src\Pages\ChatBot.js
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Form, InputGroup, Card } from "react-bootstrap";
 import axios from "axios";
@@ -13,8 +12,24 @@ const ChatBot = () => {
   const [sessionId] = useState(uuidv4());
   const [language, setLanguage] = useState("id");
   const [isTyping, setIsTyping] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
   const messagesEndRef = useRef(null);
+
+  // Adjust sidebar visibility based on screen size
+  const checkMobileView = () => {
+    const isMobile = window.innerWidth <= 768; // Define your mobile breakpoint
+    setSidebarVisible(!isMobile); // Hide sidebar on mobile by default
+  };
+
+  useEffect(() => {
+    checkMobileView(); // Check initial screen size
+    window.addEventListener("resize", checkMobileView); // Add resize listener
+
+    return () => {
+      window.removeEventListener("resize", checkMobileView); // Cleanup on unmount
+    };
+  }, []);
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
@@ -63,11 +78,19 @@ const ChatBot = () => {
     }
   };
 
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
+
   return (
     <div className="d-flex" style={{ height: "100vh" }}>
-      <AppSidebar />
+      {sidebarVisible && <AppSidebar />}
       <div className="d-flex flex-column flex-grow-1">
-        <AppNavbar language={language} setLanguage={setLanguage} />{" "}
+        <AppNavbar
+          language={language}
+          setLanguage={setLanguage}
+          toggleSidebar={toggleSidebar}
+        />
         <Card
           className="flex-grow-1"
           style={{

@@ -1,8 +1,7 @@
-// src/Components/Navbar.js
 import React from "react";
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
 
-const AppNavbar = ({ language, setLanguage }) => {
+const AppNavbar = ({ language, setLanguage, toggleSidebar }) => {
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
   };
@@ -12,6 +11,13 @@ const AppNavbar = ({ language, setLanguage }) => {
   return (
     <Navbar bg="primary" variant="dark" expand="lg">
       <Container>
+        <Button
+          variant="outline-light"
+          onClick={toggleSidebar}
+          style={{ marginRight: "1rem" }}
+        >
+          &#9776; {/* Hamburger icon */}
+        </Button>
         <Navbar.Brand className="mx-auto" style={{ textAlign: "center" }}>
           MentaEase
         </Navbar.Brand>
