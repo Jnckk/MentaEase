@@ -97,6 +97,7 @@ const ChatBot = () => {
             overflowY: "auto",
             marginBottom: "0px",
             flex: 1,
+            minHeight: "0", // Ensures Card grows but doesn't overflow
           }}
         >
           <Card.Body className="d-flex flex-column" style={{ height: "100%" }}>
@@ -105,6 +106,7 @@ const ChatBot = () => {
               style={{
                 overflowY: "auto",
                 height: "100%",
+                flex: 1, // Ensures the chat box takes available space
               }}
             >
               {messages.map((msg, index) => (
@@ -128,6 +130,7 @@ const ChatBot = () => {
           style={{
             border: "none",
             marginTop: "auto",
+            minHeight: "60px", // Ensures input card stays in view
           }}
         >
           <Card.Body>
@@ -136,6 +139,7 @@ const ChatBot = () => {
               style={{
                 position: "sticky",
                 bottom: 0,
+                zIndex: 1,
               }}
             >
               <Form.Control
