@@ -16,18 +16,17 @@ const ChatBot = () => {
 
   const messagesEndRef = useRef(null);
 
-  // Adjust sidebar visibility based on screen size
   const checkMobileView = () => {
-    const isMobile = window.innerWidth <= 768; // Define your mobile breakpoint
-    setSidebarVisible(!isMobile); // Hide sidebar on mobile by default
+    const isMobile = window.innerWidth <= 768;
+    setSidebarVisible(!isMobile);
   };
 
   useEffect(() => {
-    checkMobileView(); // Check initial screen size
-    window.addEventListener("resize", checkMobileView); // Add resize listener
+    checkMobileView();
+    window.addEventListener("resize", checkMobileView);
 
     return () => {
-      window.removeEventListener("resize", checkMobileView); // Cleanup on unmount
+      window.removeEventListener("resize", checkMobileView);
     };
   }, []);
 

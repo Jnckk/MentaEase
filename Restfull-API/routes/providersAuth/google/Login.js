@@ -14,7 +14,6 @@ router.get("/login", async (req, res) => {
       return res.status(400).json({ error: "Login dengan Google gagal." });
     }
 
-    // Redirect user to Google login URL
     res.redirect(data.url);
   } catch (err) {
     console.error("Server error:", err);

@@ -16,7 +16,7 @@ const AppNavbar = ({ language, setLanguage, toggleSidebar }) => {
           onClick={toggleSidebar}
           style={{ marginRight: "1rem" }}
         >
-          &#9776; {/* Hamburger icon */}
+          &#9776;
         </Button>
         <Navbar.Brand className="mx-auto" style={{ textAlign: "center" }}>
           MentaEase

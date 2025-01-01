@@ -5,10 +5,9 @@ const verifyToken = require("../../../middlewares/verifyToken");
 const router = express.Router();
 
 router.delete("/Delete-Account", verifyToken, async (req, res) => {
-  const userId = req.userId; // Mendapatkan userId dari middleware verifyToken
+  const userId = req.userId;
 
   try {
-    // Menghapus pengguna dari auth.users menggunakan admin API
     const { data, error } = await supabase.auth.admin.deleteUser(userId);
 
     if (error) {

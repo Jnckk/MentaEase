@@ -14,6 +14,6 @@ body, html {
 }
 
 .chat-box {
-  height: calc(100% - 100px); /* Sesuaikan dengan tinggi header dan input */
+  height: calc(100% - 100px);
   overflow-y: auto;
 }
