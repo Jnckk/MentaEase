@@ -85,13 +85,7 @@ const ChatBot = () => {
   return (
     <div className="d-flex" style={{ height: "100vh" }}>
       {sidebarVisible && <AppSidebar />}
-      <div
-        className="d-flex flex-column flex-grow-1"
-        style={{
-          height: sidebarVisible ? "100%" : "auto", // Reduce height when sidebar is hidden on mobile
-          overflowY: "auto",
-        }}
-      >
+      <div className="d-flex flex-column flex-grow-1">
         <AppNavbar
           language={language}
           setLanguage={setLanguage}
