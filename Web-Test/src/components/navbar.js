@@ -5,7 +5,7 @@ import {
   onAuthStateChange,
   signInWithGoogle,
   signOut,
-} from "../utils/Auth"; // Import fungsi auth
+} from "../utils/Auth";
 
 const AppNavbar = ({ language, setLanguage, toggleSidebar }) => {
   const [user, setUser] = useState(null);
@@ -18,7 +18,6 @@ const AppNavbar = ({ language, setLanguage, toggleSidebar }) => {
 
     fetchUser();
 
-    // Pantau perubahan autentikasi
     const { data: authListener } = onAuthStateChange(setUser);
 
     return () => {
