@@ -75,7 +75,7 @@ const Navbar = () => {
               setIsMobileMenuOpen(false);
             }}
           >
-            {user ? user.email : "Account"}
+            {user ? user.user_metadata.full_name : "Account"}
           </Link>
         </div>
       </div>

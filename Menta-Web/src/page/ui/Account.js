@@ -39,11 +39,19 @@ const Account = () => {
             <div className="account-info-container">
               <div className="account-info">
                 <span className="account-info-label">Name</span>
-                <span className="account-info-value">{user.name || "-"}</span>
+                <span className="account-info-value">
+                  {user.user_metadata.full_name || "-"}
+                </span>
               </div>
               <div className="account-info">
                 <span className="account-info-label">Email</span>
                 <span className="account-info-value">{user.email}</span>
+              </div>
+              <div className="account-info">
+                <span className="account-info-label">Log-In With</span>
+                <span className="account-info-value">
+                  {user.app_metadata.provider}
+                </span>
               </div>
               <button onClick={handleLogout} className="logout-button">
                 <FontAwesomeIcon icon={faSignOut} className="logout-icon" />
