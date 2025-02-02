@@ -7,6 +7,7 @@ import "../components/css/Navbar.css";
 const Navbar = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [user, setUser] = React.useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     const loadUser = async () => {
@@ -23,30 +24,62 @@ const Navbar = () => {
     }
   };
 
-const handleAccountClick = () => {
-  window.location.href = "/account";
-};
-
+  const handleAccountClick = () => {
+    window.location.href = "/account";
+  };
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-content">
         <div className="logo">MentaEase</div>
-        <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/chat" onClick={handleAIThorClick}>
+        <div className="hamburger-menu" onClick={toggleMobileMenu}>
+          <div
+            className={`hamburger-line ${isMobileMenuOpen ? "active" : ""}`}
+          ></div>
+          <div
+            className={`hamburger-line ${isMobileMenuOpen ? "active" : ""}`}
+          ></div>
+          <div
+            className={`hamburger-line ${isMobileMenuOpen ? "active" : ""}`}
+          ></div>
+        </div>
+
+        <div className={`nav-links ${isMobileMenuOpen ? "active" : ""}`}>
+          <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
+            Home
+          </Link>
+          <Link
+            to="/chat"
+            onClick={(e) => {
+              handleAIThorClick(e);
+              setIsMobileMenuOpen(false);
+            }}
+          >
             AIThor
           </Link>
-          <Link to="/policy">Policy</Link>
-          <Link to="/account" onClick={handleAccountClick}>
+          <Link to="/policy" onClick={() => setIsMobileMenuOpen(false)}>
+            Policy
+          </Link>
+          <Link
+            to="/account"
+            onClick={() => {
+              handleAccountClick();
+              setIsMobileMenuOpen(false);
+            }}
+          >
             {user ? user.email : "Account"}
           </Link>
         </div>
       </div>
+
       {showModal && <Modal show={showModal} onClose={handleCloseModal} />}
     </nav>
   );
