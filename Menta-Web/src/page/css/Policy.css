@@ -1,0 +1,43 @@
+.policy-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #222E5F;
+    line-height: 1.6;
+}
+
+.policy-section {
+    background-color: white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.policy-h2 {
+    color: #222E5F;
+    margin-bottom: 1rem;
+}
+
+.policy-h3 {
+    color: #222E5F;
+    margin-bottom: 1rem;
+}
+
+.policy-definition {
+    background-color: #f5f5f5;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+}
+
+.policy-p {
+    color: #222E5F;
+    line-height: 1.6;
+}
+
+.policy-list-item {
+    color: #222E5F;
+    line-height: 1.6;
+}

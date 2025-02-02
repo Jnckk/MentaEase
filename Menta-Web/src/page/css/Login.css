@@ -1,0 +1,135 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background-color: #d9d9d9;
+}
+
+.login-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header h1 {
+    color: #222e5f;
+    margin-bottom: 0.5rem;
+}
+
+.login-header p {
+    color: #474f6d;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #222e5f;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #d9d9d9;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #474f6d;
+}
+
+.login-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #222e5f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #1a2344;
+}
+
+.google-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: white;
+    color: #222e5f;
+    border: 2px solid #d9d9d9;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.google-button:hover {
+    background-color: #f8f9fa;
+    border-color: #222e5f;
+}
+
+.google-icon {
+    margin-right: 10px;
+}
+
+.link-button {
+    background: none;
+    border: none;
+    color: #474f6d;
+    text-decoration: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+.link-button:hover {
+    color: #222e5f;
+    text-decoration: underline;
+}
+
+.additional-options {
+    /* margin-top: 1.5rem; */
+    text-align: center;
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+}
+
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 1.5rem;
+    }
+
+    .login-header h1 {
+        font-size: 1.5rem;
+    }
+}
