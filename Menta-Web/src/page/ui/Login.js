@@ -42,7 +42,7 @@ function Login() {
             const { user } = await signInWithGoogle(navigate);
             if (user) {
               storeUserData(user);
-              navigate("/home");
+              navigate("/");
             }
           } catch (error) {
             console.error("Gagal login dengan Google:", error);
