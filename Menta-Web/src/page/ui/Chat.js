@@ -37,7 +37,7 @@ const Chat = () => {
       if (userEmail) {
         fetchHistory(userEmail);
       }
-    }, 5000);
+    }, 1000);
 
     return () => clearInterval(intervalId);
   }, [userEmail]);
