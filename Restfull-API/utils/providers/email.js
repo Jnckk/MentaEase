@@ -1,4 +1,3 @@
-// routes/supabaseAuth/supabaseAuth.js
 const express = require("express");
 const Registration = require("../../routes/providersAuth/email/Registration");
 const Login = require("../../routes/providersAuth/email/Login");

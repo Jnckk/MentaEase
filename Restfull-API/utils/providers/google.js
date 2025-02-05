@@ -1,4 +1,3 @@
-// routes/otherAuth/otherAuth.js
 const express = require("express");
 const Login = require("../../routes/providersAuth/google/Login");
 
