@@ -48,7 +48,6 @@ const Chat = () => {
       const data = await response.json();
       setHistoryList(data.history);
     } catch (error) {
-      console.error("Gagal mengambil history:", error);
     }
   };
 
@@ -57,19 +56,15 @@ const Chat = () => {
       const response = await fetch(`${historyDetailURL}/${email}/${sessionId}`);
       const data = await response.json();
 
-      console.log("Data yang diterima:", data);
-
       if (Array.isArray(data.messages) && data.messages.length > 0) {
         const allMessages = data.messages.flatMap(
           (history) => history.messages || []
         );
         setMessages(allMessages);
       } else {
-        console.error("Data tidak sesuai dengan format yang diharapkan:", data);
         setMessages([]);
       }
     } catch (error) {
-      console.error("Gagal mengambil detail history:", error);
     }
   };
 
@@ -98,7 +93,6 @@ const Chat = () => {
       });
 
     } catch (error) {
-      console.error("Gagal menyimpan history:", error);
     }
   };
 
@@ -139,7 +133,6 @@ const Chat = () => {
         return updatedMessages;
       });
     } catch (error) {
-      console.error("Gagal mengirim pesan:", error);
     }
   };
 
