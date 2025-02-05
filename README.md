@@ -7,6 +7,7 @@ This documentation provides a detailed guide to use the MentaEase API. This guid
 
 1. [Base Url](#base-url)
 2. [GroqAPI](./README/GroqAPI.md)
+3. [History](./README/History.md)
 3. Auth Providers
     - [Email](./README/Email.md)
     - [Google](./README/Google.md)
